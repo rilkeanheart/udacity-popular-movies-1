@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PopularMovies</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <!-- Statics for the Movie API-->
+    <string name="image_url_base">http://image.tmdb.org/t/p/w185</string>
+    <string name="detail_image_url_base">http://image.tmdb.org/t/p/w154</string>
+    <string name="movie_api_discover_base_url">http://api.themoviedb.org/3/discover/movie?</string>
+    <string name="movie_api_sort_by_release_url_param">release_date.desc</string>
+    <string name="movie_api_sort_by_rating_url_param">vote_average.desc</string>
+    <string name="movie_api_sort_by_popularity_url_param">popularity.desc</string>
+    <string name="movie_api_json_results">results</string>
+    <string name="movie_api_json_adult">adult</string>
+    <string name="movie_api_json_backdrop_path">backdrop_path</string>
+    <string name="movie_api_json_genre_ids">genre_ids</string>
+    <string name="movie_api_json_id">id</string>
+    <string name="movie_api_json_original_language">original_language</string>
+    <string name="movie_api_json_original_title">original_title</string>
+    <string name="movie_api_json_overview">overview</string>
+    <string name="movie_api_json_release_date">release_date</string>
+    <string name="movie_api_json_poster_path">poster_path</string>
+    <string name="movie_api_json_popularity">popularity</string>
+    <string name="movie_api_json_title">title</string>
+    <string name="movie_api_json_video">video</string>
+    <string name="movie_api_json_vote_average">vote_average</string>
+    <string name="movie_api_json_vote_count">vote_count</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_movie_details">MovieDetails</string>
+</resources>
