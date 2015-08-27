@@ -43,9 +43,9 @@ import java.util.Date;
  */
 public class MainActivityFragment extends Fragment {
 
-
-
     private ImageAdapter mMoviePosterGridAdapter;
+    private final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+    private String mLastSortByStr;
 
     public MainActivityFragment() {
     }
@@ -54,13 +54,32 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mMoviePosterGridAdapter =
-                new ImageAdapter(
-                        getActivity().getApplicationContext(), // The current context (this activity)
-                        R.layout.grid_item_movie_poster, // The name of the layout ID.
-                        R.id.grid_item_movie_imageview, // The ID of the view item to populate.
-                        new ArrayList<JSONObject>());
+        if(savedInstanceState == null) {
+            mMoviePosterGridAdapter =
+                    new ImageAdapter(
+                            getActivity().getApplicationContext(), // The current context (this activity)
+                            R.layout.grid_item_movie_poster, // The name of the layout ID.
+                            R.id.grid_item_movie_imageview, // The ID of the view item to populate.
+                            new ArrayList<JSONObject>());
+        } else {
+            ArrayList<String> stringifiedMoviesList = savedInstanceState.getStringArrayList("key");
+            ArrayList<JSONObject> jsonMoviesList =
+                    new ArrayList<JSONObject>(stringifiedMoviesList.size());
+            for(String movieString : stringifiedMoviesList) {
+                try {
+                    jsonMoviesList.add(new JSONObject(movieString));
+                } catch(JSONException e) {
+                    Log.e(LOG_TAG, "Error", e);
+                }
+            }
 
+            mMoviePosterGridAdapter =
+                    new ImageAdapter(
+                            getActivity().getApplicationContext(), // The current context (this activity)
+                            R.layout.grid_item_movie_poster, // The name of the layout ID.
+                            R.id.grid_item_movie_imageview, // The ID of the view item to populate.
+                            jsonMoviesList);
+        }
 
         //Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -84,12 +103,42 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int sizeList = mMoviePosterGridAdapter.getCount();
+        ArrayList<String> stringifiedMoviesList = new ArrayList<String>(sizeList);
+        for(int i = 0; i < sizeList; i++) {
+            JSONObject thisMovie = mMoviePosterGridAdapter.getItem(i);
+            stringifiedMoviesList.add(thisMovie.toString());
+        }
+        outState.putStringArrayList("key", stringifiedMoviesList);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-        updateMovies();
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String currentSortByPref = sharedPrefs.getString(
+                getString(R.string.pref_sort_order_key),
+                getString(R.string.pref_sort_by_release_date));
+        if(mMoviePosterGridAdapter.getCount() == 0 ||
+                !currentSortByPref.equals(mLastSortByStr)) {
+            updateMovies();
+        }
     }
 
     private void updateMovies(){
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mLastSortByStr = sharedPrefs.getString(
+                getString(R.string.pref_sort_order_key),
+                getString(R.string.pref_sort_by_release_date));
         // Fetch Movies using AsyncTask
         FetchMoviesTask moviesTask = new FetchMoviesTask();
         moviesTask.execute();
