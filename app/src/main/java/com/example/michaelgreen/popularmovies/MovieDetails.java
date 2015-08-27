@@ -1,11 +1,22 @@
 package com.example.michaelgreen.popularmovies;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MovieDetails extends AppCompatActivity {
+
+    @Override @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public Intent getParentActivityIntent() {
+    // add the clear top flag - which checks if the parent (main)
+    // activity is already running and avoids recreating it
+        return super.getParentActivityIntent()
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

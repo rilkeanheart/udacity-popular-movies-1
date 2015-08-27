@@ -3,6 +3,7 @@ package com.example.michaelgreen.popularmovies;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -85,6 +86,13 @@ public class MainActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview_posters);
+
+        // Grab more real estate if in landscape mode
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            gridview.setNumColumns(5);
+        }
+
         gridview.setAdapter(mMoviePosterGridAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,67 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.michaelgreen.popularmovies.MovieDetailsFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.michaelgreen.popularmovies.MovieDetailsFragment">
 
-    <TextView android:text="Chappie"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="48dp"
-        android:paddingBottom="48dp"
-        android:paddingLeft="32dp"
-        android:id="@+id/movieTitle"
-        android:textColor="#EEEEEE"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:background="#009688"
-        android:textStyle="bold"/>
+        <TextView android:text="Chappie"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="48dp"
+            android:paddingBottom="48dp"
+            android:paddingLeft="32dp"
+            android:id="@+id/movieTitle"
+            android:textColor="#EEEEEE"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:background="#009688"
+            android:textStyle="bold"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/moviePoster"
-        android:layout_below="@+id/movieTitle"
-        android:layout_marginTop="42dp"
-        android:layout_marginLeft="32dp"
-        android:src="@drawable/antman92"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moviePoster"
+            android:layout_below="@+id/movieTitle"
+            android:layout_marginTop="42dp"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/antman92"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Release Date"
-        android:id="@+id/releaseDate"
-        android:layout_alignTop="@+id/moviePoster"
-        android:layout_toRightOf="@+id/moviePoster"
-        android:layout_marginLeft="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Release Date"
+            android:id="@+id/releaseDate"
+            android:layout_alignTop="@+id/moviePoster"
+            android:layout_toRightOf="@+id/moviePoster"
+            android:layout_marginLeft="32dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Rating"
-        android:id="@+id/userRating"
-        android:layout_below="@+id/releaseDate"
-        android:layout_alignLeft="@+id/releaseDate"
-        android:layout_marginTop="25dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Rating"
+            android:id="@+id/userRating"
+            android:layout_below="@+id/releaseDate"
+            android:layout_alignLeft="@+id/releaseDate"
+            android:layout_marginTop="25dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plot Synopsis"
-        android:id="@+id/plotSynopsis"
-        android:layout_below="@+id/moviePoster"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plot Synopsis"
+            android:id="@+id/plotSynopsis"
+            android:layout_below="@+id/moviePoster"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="32dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" / 10"
-        android:id="@+id/textView"
-        android:layout_alignTop="@+id/userRating"
-        android:layout_toRightOf="@+id/userRating"
-        android:layout_toEndOf="@+id/userRating" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" / 10"
+            android:id="@+id/textView"
+            android:layout_alignTop="@+id/userRating"
+            android:layout_toRightOf="@+id/userRating"
+            android:layout_toEndOf="@+id/userRating" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>
+
