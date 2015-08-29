@@ -63,7 +63,9 @@ public class MainActivityFragment extends Fragment {
                             R.id.grid_item_movie_imageview, // The ID of the view item to populate.
                             new ArrayList<JSONObject>());
         } else {
-            ArrayList<String> stringifiedMoviesList = savedInstanceState.getStringArrayList("key");
+            ArrayList<String> stringifiedMoviesList =
+                    savedInstanceState.getStringArrayList("movieListKey");
+            mLastSortByStr = savedInstanceState.getString("lastSortedByKey");
             ArrayList<JSONObject> jsonMoviesList =
                     new ArrayList<JSONObject>(stringifiedMoviesList.size());
             for(String movieString : stringifiedMoviesList) {
@@ -124,7 +126,8 @@ public class MainActivityFragment extends Fragment {
             JSONObject thisMovie = mMoviePosterGridAdapter.getItem(i);
             stringifiedMoviesList.add(thisMovie.toString());
         }
-        outState.putStringArrayList("key", stringifiedMoviesList);
+        outState.putStringArrayList("movieListKey", stringifiedMoviesList);
+        outState.putString("lastSortedByKey", mLastSortByStr);
     }
 
     @Override
@@ -138,6 +141,9 @@ public class MainActivityFragment extends Fragment {
         if(mMoviePosterGridAdapter.getCount() == 0 ||
                 !currentSortByPref.equals(mLastSortByStr)) {
             updateMovies();
+        } else {
+            // Note that update was skipped
+            Log.v(LOG_TAG, "Skipping remote fetch of movies.");
         }
     }
 
