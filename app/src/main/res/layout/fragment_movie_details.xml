@@ -1,71 +1,153 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" >
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_gravity="left"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.michaelgreen.popularmovies.MovieDetailsFragment">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <TextView android:text="Chappie"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_gravity="left"
             android:layout_height="wrap_content"
-            android:paddingTop="48dp"
-            android:paddingBottom="48dp"
-            android:paddingLeft="32dp"
-            android:id="@+id/movieTitle"
-            android:textColor="#EEEEEE"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="16dp"
             android:background="#009688"
-            android:textStyle="bold"/>
+            android:paddingTop="48dp"
+            android:paddingBottom="48dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
+            <TextView android:text="Chappie"
+                android:id="@+id/movieTitle"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textColor="#EEEEEE"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content" />
+
+            <ToggleButton
+                android:id="@+id/like_toggle"
+                android:background="@null"
+                android:button="@drawable/favorite"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_gravity="left"
             android:layout_height="wrap_content"
-            android:id="@+id/moviePoster"
-            android:layout_below="@+id/movieTitle"
-            android:layout_marginTop="42dp"
-            android:layout_marginLeft="32dp"
-            android:src="@drawable/antman92"/>
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/moviePoster"
+                android:src="@drawable/antman92"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Release Date"
+                    android:id="@+id/releaseDate"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Rating"
+                    android:id="@+id/userRating"
+                    android:layout_marginTop="25dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Release Date"
-            android:id="@+id/releaseDate"
-            android:layout_alignTop="@+id/moviePoster"
-            android:layout_toRightOf="@+id/moviePoster"
-            android:layout_marginLeft="32dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Rating"
-            android:id="@+id/userRating"
-            android:layout_below="@+id/releaseDate"
-            android:layout_alignLeft="@+id/releaseDate"
-            android:layout_marginTop="25dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Plot Synopsis"
             android:id="@+id/plotSynopsis"
-            android:layout_below="@+id/moviePoster"
-            android:layout_marginLeft="32dp"
-            android:layout_marginStart="88dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="32dp"/>
+            android:layout_margin="16dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <View
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_gravity="left"
             android:layout_height="wrap_content"
-            android:text=" / 10"
-            android:id="@+id/textView"
-            android:layout_alignTop="@+id/userRating"
-            android:layout_toRightOf="@+id/userRating"
-            android:layout_toEndOf="@+id/userRating" />
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trailers:"
+                android:id="@+id/trailers_header"/>
 
-    </RelativeLayout>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listView_trailers" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_gravity="left"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews:"
+                android:id="@+id/reviews_header"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listView_reviews" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </ScrollView>
 

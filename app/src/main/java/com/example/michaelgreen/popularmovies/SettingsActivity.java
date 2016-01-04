@@ -18,6 +18,7 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Button;
 
 
 import java.util.List;
@@ -43,14 +44,27 @@ public class SettingsActivity extends PreferenceActivity
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
 
+    protected boolean isValidFragment(String fragmentName) {
+        return fragmentName.equals(GeneralPreferenceFragment.class.getName())
+                || fragmentName.equals(NotificationPreferenceFragment.class.getName())
+                || fragmentName.equals(DataSyncPreferenceFragment.class.getName());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setupActionBar();
+        /*// setupActionBar();
         // Add preferences defined in the XML file
         addPreferencesFromResource(R.xml.pref_general);
 
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_order_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_order_key)));*/
+
+        // Add a button to the header list.
+        /*if(hasHeaders()) {
+            Button button = new Button(this);
+            button.setText("Some action");
+            setListFooter(button);
+        }*/
     }
 
     @Override
@@ -123,9 +137,9 @@ public class SettingsActivity extends PreferenceActivity
         // use the older PreferenceActivity APIs.
 
         // Add 'general' preferences.
-       // addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_general);
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_order_key)));
 
-        //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_order_key)));
         /*
         // Add 'notifications' preferences, and a corresponding header.
         PreferenceCategory fakeHeader = new PreferenceCategory(this);
@@ -272,13 +286,15 @@ public class SettingsActivity extends PreferenceActivity
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
+            // setupActionBar();
+            // Add preferences defined in the XML file
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_order_key)));
+        }
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+        protected boolean isValidFragment(String fragmentName) {
+            return fragmentName.equals(GeneralPreferenceFragment.class.getName())
+                    || fragmentName.equals(NotificationPreferenceFragment.class.getName())
+                    || fragmentName.equals(DataSyncPreferenceFragment.class.getName());
         }
     }
 
@@ -298,6 +314,12 @@ public class SettingsActivity extends PreferenceActivity
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+        }
+
+        protected boolean isValidFragment(String fragmentName) {
+            return fragmentName.equals(GeneralPreferenceFragment.class.getName())
+                    || fragmentName.equals(NotificationPreferenceFragment.class.getName())
+                    || fragmentName.equals(DataSyncPreferenceFragment.class.getName());
         }
     }
 

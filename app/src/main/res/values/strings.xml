@@ -4,8 +4,14 @@
     <string name="action_settings">Settings</string>
     <!-- Statics for the Movie API-->
     <string name="image_url_base">http://image.tmdb.org/t/p/w185</string>
+    <string name="youtube_url_base">http://www.youtube.com/v/</string>
+    <string name="youtube_video_param_name">v</string>
+    <string name="youtube_video_site_name">YouTube</string>
+    <string name="youtube_native_app_uri_base">vnd.youtube:</string>
     <string name="detail_image_url_base">http://image.tmdb.org/t/p/w154</string>
     <string name="movie_api_discover_base_url">http://api.themoviedb.org/3/discover/movie?</string>
+    <string name="movie_api_reviews_base_url">http://api.themoviedb.org/3/movie/%1$s/reviews?</string>
+    <string name="movie_api_trailers_base_url">http://api.themoviedb.org/3/movie/%1$s/videos?</string>
     <string name="movie_api_sort_by_release_url_param">release_date.desc</string>
     <string name="movie_api_sort_by_rating_url_param">vote_average.desc</string>
     <string name="movie_api_sort_by_popularity_url_param">popularity.desc</string>
@@ -23,8 +29,26 @@
     <string name="movie_api_json_title">title</string>
     <string name="movie_api_json_video">video</string>
     <string name="movie_api_json_vote_average">vote_average</string>
+    <string name="movie_api_json_trailer_id">id</string>
+    <string name="movie_api_json_trailer_iso_639_1">iso_639_1</string>
+    <string name="movie_api_json_trailer_key">key</string>
+    <string name="movie_api_json_trailer_name">name</string>
+    <string name="movie_api_json_trailer_site">site</string>
+    <string name="movie_api_json_trailer_size">size</string>
+    <string name="movie_api_json_trailer_type">type</string>
     <string name="movie_api_json_vote_count">vote_count</string>
+    <string name="movie_json_trailers">trailers</string>
+    <string name="movie_json_review_id">id</string>
+    <string name="movie_json_review_author">author</string>
+    <string name="movie_json_review_content">content</string>
+    <string name="movie_json_review_url">url</string>
+    <string name="movie_json_reviews">reviews</string>
+    <string name="movie_json_is_favorite">is_favorite</string>
+    <string name="movie_json_is_favorite_unknown">unknown</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_movie_details">MovieDetails</string>
+
+    <string name="content_authority">com.example.michaelgreen.popularmovies</string>
 </resources>

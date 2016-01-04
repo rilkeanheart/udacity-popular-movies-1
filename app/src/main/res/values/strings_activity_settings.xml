@@ -9,15 +9,18 @@
     <string name="pref_sort_order_key">sort_order</string>
     <string name="pref_sort_by_popularity">sort_by_popularity</string>
     <string name="pref_sort_by_release_date">sort_by_release_date</string>
+    <string name="pref_sort_by_favorites">sort_by_favorites</string>
     <string-array name="pref_sort_by_options">
         <item>By Popularity</item>
         <item>By Rating</item>
         <item>By Release Date</item>
+        <item>By Favorites</item>
     </string-array>
     <string-array name="pref_sort_by_values">
         <item>sort_by_popularity</item>
         <item>sort_by_voted_average</item>
         <item>sort_by_release_date</item>
+        <item>sort_by_favorites</item>
     </string-array>
 
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

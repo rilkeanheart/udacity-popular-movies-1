@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -21,6 +22,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.michaelgreen.popularmovies.data.MovieContract;
+import com.example.michaelgreen.popularmovies.data.MovieProvider;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -49,6 +52,18 @@ public class MainActivityFragment extends Fragment {
     private String mLastSortByStr;
 
     public MainActivityFragment() {
+    }
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(String movieJSON, boolean twoPaneOnly);
     }
 
     @Override
@@ -103,11 +118,15 @@ public class MainActivityFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view,
                                     int position, long id) {
                 JSONObject selectedMovie = mMoviePosterGridAdapter.getItem(position);
+                ((Callback) getActivity())
+                        .onItemSelected(selectedMovie.toString(), false);
+                /*
                 Intent intent = new Intent(getActivity(), MovieDetails.class)
                         .putExtra(Intent.EXTRA_TEXT, selectedMovie.toString());
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
+
 
         return rootView;
     }
@@ -153,9 +172,15 @@ public class MainActivityFragment extends Fragment {
         mLastSortByStr = sharedPrefs.getString(
                 getString(R.string.pref_sort_order_key),
                 getString(R.string.pref_sort_by_release_date));
-        // Fetch Movies using AsyncTask
-        FetchMoviesTask moviesTask = new FetchMoviesTask();
-        moviesTask.execute();
+        if(mLastSortByStr.equals(getString(R.string.pref_sort_by_favorites))) {
+            // Fetch Movies using DB Based AsyncTask
+            FetchMoviesFromDbTask moviesTask = new FetchMoviesFromDbTask(getActivity());
+            moviesTask.execute();
+        } else {
+            // Fetch Movies using Web Based AsyncTask
+            FetchMoviesTask moviesTask = new FetchMoviesTask();
+            moviesTask.execute();
+        }
     }
 
     public class ImageAdapter extends ArrayAdapter<JSONObject> {
@@ -347,7 +372,86 @@ public class MainActivityFragment extends Fragment {
                 for(JSONObject movieObject : result) {
                     mMoviePosterGridAdapter.add(movieObject);
                 }
-                // New data is back from the server.  Hooray!
+                // New data is back from the database.  Hooray!
+                ((MainActivity) getActivity()).onItemSelected(result[0].toString(), true);
+            }
+        }
+    }
+
+    public class FetchMoviesFromDbTask extends AsyncTask<Void, Void, JSONObject[]> {
+
+        private Context mContext;
+
+        private final String LOG_TAG = FetchMoviesFromDbTask.class.getSimpleName();
+
+        public FetchMoviesFromDbTask(Context context){
+            mContext = context;
+        }
+
+        /**
+         * Take the String representing the complete forecast in JSON Format and
+         * pull out the data we need to construct the Strings needed for the wireframes.
+         *
+         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
+         * into an Object hierarchy for us.
+         */
+        private JSONObject[] cursor2Json(Cursor cursor) {
+
+            JSONObject[] results = new JSONObject[cursor.getCount()];
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                int totalColumn = cursor.getColumnCount();
+                JSONObject rowObject = new JSONObject();
+                for (int i = 0; i < totalColumn; i++) {
+                    if (cursor.getColumnName(i) != null) {
+                        try {
+                            rowObject.put(cursor.getColumnName(i),
+                                    cursor.getString(i));
+                        } catch (Exception e) {
+                            Log.d(LOG_TAG, e.getMessage());
+                        }
+                    }
+                }
+                results[cursor.getPosition()] = rowObject;
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+            return results;
+
+        }
+
+        @Override
+        protected JSONObject[] doInBackground(Void... params) {
+
+            // Use MovieProvider to query for Favorite Movies
+            // Test the basic content provider query
+
+            String sFavoriteSettingSelection =
+                    MovieContract.MovieEntry.TABLE_NAME+
+                            "." + MovieContract.MovieEntry.COLUMN_IS_FAVORITE + " = ? ";
+            Cursor favoriteMoviesCursor = mContext.getContentResolver().query(
+                    MovieContract.MovieEntry.CONTENT_URI,
+                    null,
+                    sFavoriteSettingSelection, // columns for WHERE clause
+                    new String[]{"TRUE"}, // values for WHERE clause
+                    MovieContract.MovieEntry.COLUMN_TITLE + " ASC"  // sort order == by title ASCENDING
+            );
+
+            return cursor2Json(favoriteMoviesCursor);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject[] result) {
+            if (result != null) {
+                mMoviePosterGridAdapter.clear();
+                for(JSONObject movieObject : result) {
+                    mMoviePosterGridAdapter.add(movieObject);
+                }
+                // New data is back from the database.  Hooray!
+                if(result.length > 0) {
+                    ((MainActivity) getActivity()).onItemSelected(result[0].toString(), true);
+                }
             }
         }
     }
